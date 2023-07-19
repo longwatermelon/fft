@@ -23,7 +23,7 @@ fn plot(y: &[f32], color: Color) {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    let samples: usize = 100;
+    let samples: usize = 2000;
     let time: f32 = 2.;
     let x: Vec<Complex> = (0..samples).map(
         |x| Complex::new(

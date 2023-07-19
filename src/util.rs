@@ -8,8 +8,12 @@ pub fn k_to_hz(k: usize, samples: usize, time: f32) -> f32 {
 pub fn peaks(y: &[f32]) -> Vec<usize> {
     let mut peaks: Vec<usize> = Vec::new();
 
+    // TODO fix peak detection
+    let mut avg: f32 = 0.;
     for i in 1..(y.len() - 1) {
-        if y[i] > y[i - 1] && y[i] > y[i + 1] {
+        avg += y[i] / (y.len() - 2) as f32;
+
+        if y[i] > y[i - 1] && y[i] > y[i + 1] && y[i] > avg * 5. {
             peaks.push(i);
         }
     }

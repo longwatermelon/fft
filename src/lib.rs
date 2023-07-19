@@ -3,6 +3,7 @@ pub mod util;
 use complex::Complex;
 use std::f32::consts::PI;
 
+/// Discrete fourier transform - O(n^2)
 pub fn dft(x: &[Complex]) -> Vec<Complex> {
     let mut xout: Vec<Complex> = vec![Complex::new(0., 0.); x.len()];
 
@@ -30,5 +31,13 @@ pub fn dft(x: &[Complex]) -> Vec<Complex> {
     xout
 }
 
+/// All frequencies that exist in the fourier transform result
+pub fn frequencies(xout: &[Complex], samples: usize, time: f32) -> Vec<f32> {
+    let xout: Vec<f32> = xout.iter().map(|x| f32::sqrt(x.re * x.re + x.im * x.im)).collect();
+    let peaks: Vec<usize> = util::peaks(xout.as_slice());
 
+    peaks.iter().map(|x|
+        util::k_to_hz(*x, samples, time)
+    ).collect()
+}
 
